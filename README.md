@@ -1,4 +1,4 @@
-**View our hackster article [here](https://www.hackster.io/dect/b-hive-a14efa "Hackster Article").** 
+**View our hackster article [here](https://www.hackster.io/dect/b-hive-a14efa "Hackster Article").**
 
 # B-Hive
 B-hive is an autonomous electronic monitoring device enabling beekeepers to oversee their hives' well-being.
@@ -48,13 +48,13 @@ To create our Artificial Intelligence, we decided to train a neural network to a
 
 After creating an Edge Impulse account and a project, we had the choice between two methods to train our neural network.
 
-The first one required the use of and IoT discovery kit which we connected to Edge Impulse following this tutorial. Then, to develop an IA able to recognize different sound frequencies, we followed the steps as explained here.
+The first one required the use of and IoT discovery kit which we connected to Edge Impulse following [this tutorial](https://docs.edgeimpulse.com/docs/unboxing-the-st-b-l475e-iot01a "Edge Impulse Tutorial"). Then, to develop an IA able to recognize different sound frequencies, we followed the steps as explained [here](https://docs.edgeimpulse.com/docs/audio-classification).
 
-The second methods did not required the B-L475E-IOT01A2 board. However, it was extremely time consuming. Indeed, after searching and downloading data sets (to bee or not to bee and The Hiveeyes Community), each sound sample had to be hand cut and uploaded in our design. For the majority of our project, we chose this method since we were unable to collect samplings directly from a hive.
+The second methods did not required the B-L475E-IOT01A2 board. However, it was extremely time consuming. Indeed, after searching and downloading data sets ([to bee or not to bee](https://www.kaggle.com/chrisfilo/to-bee-or-no-to-bee) and [The Hiveeyes Community](https://community.hiveeyes.org/t/sound-samples-and-basic-analysis-hive-with-queen-vs-queenless/399)), each sound sample had to be hand cut and uploaded in our design. For the majority of our project, we chose this method since we were unable to collect samplings directly from a hive.
 
 To begin, we created an impulse design and set the parameters required to train our AI. Because we are dealing with bees, we needed to take a bigger window size than the one demonstrated in the tutorial. We chose to use an MFCC bloc to train our neural network, but it was not our only option. The MFE and Spectogram blocks could have also served to train the AI. Depending on the range of frequency studied, either bloc could have worked better than the others.
 
-![alt text](images_article/Empulse.png "Empulse Design")
+![alt text](images_article/Empulse.png "Impulse Design")
 
 Next, we determined the number of training cycle, the learning rate and the minimum confidence rating to set as these parameters influence the accuracy of the model considerably. At the end, a confusion matrix showed the accuracy of our NN. When we were unsatisfied with the results, we uploaded additional data and retrain our model.
 
@@ -62,7 +62,7 @@ Next, we determined the number of training cycle, the learning rate and the mini
 
 As you can see, our NN struggled to recognize when there were bees. We were not able to retrain it due to a lack of data and time.
 
-The last step would have been to export our AI on our STM board.
+The last step would have been to [export our AI on our STM board](https://github.com/edgeimpulse/example-standalone-inferencing-mbed).
 
 
 ## PCB Making
@@ -72,7 +72,7 @@ The first step of PCB making is to do an electrical schematic with every compone
 
 ![alt text](images_article/schematic.png "Kicad Electrical Schematic")
 
-Afterwards, we followed a tutorial to conceive our board and associated our temperature sensors to grove connectors prints for a sturdier device.
+Afterwards, we followed a [tutorial](https://www.youtube.com/watch?v=C9EWrKw9Qz8&list=PLuQznwVAhY2VoayfSraJjI-Yr2OSGmFKt) to conceive our board and associated our temperature sensors to grove connectors prints for a sturdier device.
 
 While designing the printed circuit board, we noticed some pins (D7, D8, and A7) would not allow us to collect our desired set of data. This is due to how the Nucleo STM32 is made, so before printing the board make sure  to test every pin.
 
@@ -92,13 +92,13 @@ Once the design was completed, we generated the Gerber files necessary to print 
 ## Sigfox and Ubidots
 To gather our data from a remote location, we used the Sigfox Network.
 
-To set this up, we had to activate our Wisol device here. Then, we created and signed in on a Ubidots account and added a new device.
+To set this up, we had to activate our Wisol device [here](https://buy.sigfox.com/activate). Then, we created and signed in on a [Ubidots account](https://industrial.ubidots.com/accounts/signin/) and added a new device.
 
 ![alt text](images_article/add.png)
 
-The next step is to we configure a Callback following this tutorial.
+The next step is to we configure a Callback following this [tutorial](https://help.ubidots.com/en/articles/924209-setup-your-sigfox-callback-to-talk-with-ubidots-cloud).
 
-Last, we created a user interface on Ubidots with a Dashboard to facilitate data examination.
+Last, we [created a user interface on Ubidots](https://help.ubidots.com/en/articles/2400308-create-dashboards-and-widgets) with a Dashboard to facilitate data examination.
 
 ![alt text](images_article/ubi.png "User's Interface - Ubidots")
 
