@@ -31,16 +31,75 @@ For our system to work, we developed the software on Mbed. With the code we can 
 * __Initialize all the sensors.__
 For each sensors, we assigned a pin.
 
+```cpp 
+#define   DHT1_DATA_PIN  D6
+DS1820      ds1820_1(D2);  
+DS1820      ds1820_2(D3);
+DS1820      ds1820_3(D4);
+DS1820      ds1820_4(D5);
+HX711 loadcell(D12, D11);
+```
+
 * __Get value measurements for each sensors every ten minutes.__
 > Indoor temperature : We chose to use the DS18B20 temperature sensor. Indeed, this model already proved its efficiency in previous similar projects.
 
+```cpp
+//for each DS18B20
+if (!ds1820_1.begin()){
+        pc.printf("No DS1820 sensor found!\r\n");
+        for(int i=0; i<10; i++)
+        {
+            ThisThread::sleep_for(250);
+            if(ds1820_1.begin())
+            {
+                pc.printf("DS1820 sensor found on %d try\r\n", i+2);
+                break;
+            }
+        }
+    }
+    else{
+        pc.printf("DS1820 sensor found!\r\n");
+    }
+//further in the code 
+ ds1820_1.startConversion();   // start temperature conversion from analog to digital
+ ds1820_2.startConversion();   // start temperature conversion from analog to digital
+ ds1820_3.startConversion();   // start temperature conversion from analog to digital
+ ds1820_4.startConversion();   // start temperature conversion from analog to digital
+
+ ThisThread::sleep_for(1000);// let DS1820 complete the temperature conversion
+ 
+ result = ds1820_1.read(temp1); // read temperature from DS1820 and perform cyclic redundancy check (CRC)
+ result = ds1820_2.read(temp2);
+ result = ds1820_3.read(temp3);
+ result = ds1820_4.read(temp4);
+```
+
 > Outdoor temperature and humidity  : We chose the DHT22 temperature and humidity sensor.
+
+```cpp
+ c_int   = sensor1.ReadTemperature(CELCIUS);
+        h_int   = sensor1.ReadHumidity();
+```
 
 > Weight : We choose to use a strain gauge to collect weight values.
 
+```cpp
+int balance = ((loadcell.getValue() - 8469461)/21.5);
+```
+
 * __Send data that we have collected to Sigfox Backend.__
 
+```cpp
+Serial device(D1, D0); // tx, rx
+//further in the code
+device.printf("AT$SF=%02X%02X%02X%02X%02X%02X%02X%02X%04X\r\n",(char) c_ext,(char) h_ext, (char) c_int, (char) h_int,(char) temp1,(char) temp2,(char) temp3,(char) temp4, balance);
+```
+
 * __Put the micro-controller in sleep when we aren't sending data.__
+
+```cpp
+ThisThread::sleep_for(600000);
+```
 
 
 ## AI Training
