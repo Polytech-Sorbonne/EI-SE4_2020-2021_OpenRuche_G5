@@ -24,7 +24,7 @@ We also spent a large amount of time working on an Artificial Intelligence (AI) 
 
 
 ## Software 
-_The Mbed source file is available to download in the Code tab._
+_The Mbed source file is available to download._
 
 For our system to work, we developed the software on Mbed. With the code we can :
 
@@ -66,7 +66,7 @@ The last step would have been to export our AI on our STM board.
 
 
 ## PCB Making
-_The Kicad project file with all sources are available to download in the Schematics tab._
+_The Kicad project file with all sources are available to download._
 
 The first step of PCB making is to do an electrical schematic with every component.
 
