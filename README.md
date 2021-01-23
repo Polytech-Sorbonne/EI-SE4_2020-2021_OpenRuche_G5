@@ -18,8 +18,8 @@ To monitor the hive's integrity we chose to study :
 * Outdoor Humidity (+/- 2%)
 * Weight (+/- 0.2 kg)
 
-
 We also spent a large amount of time working on an Artificial Intelligence (AI) which would have been able to indicate whether or not there was a queen bee and if there were any bees at all.  Unfortunately, we were not able to implement our neural network (NN) since exporting it proved to be more intricate than expected.
+
 
 ## Software 
 _The Mbed source file is available to download in the Code tab._
@@ -40,8 +40,8 @@ For each sensors, we assigned a pin.
 
 * __Put the micro-controller in sleep when we aren't sending data.__
 
-## AI Training
 
+## AI Training
 To create our Artificial Intelligence, we decided to train a neural network to analyze sound frequency in a hive. To that end, we used Edge Impulse which is a development platform. It allows you to conceive a device with embedded machine learning effortlessly.
 
 After creating an Edge Impulse account and a project, we had the choice between two methods to train our neural network.
@@ -52,10 +52,52 @@ The second methods did not required the B-L475E-IOT01A2 board. However, it was e
 
 To begin, we created an impulse design and set the parameters required to train our AI. Because we are dealing with bees, we needed to take a bigger window size than the one demonstrated in the tutorial. We chose to use an MFCC bloc to train our neural network, but it was not our only option. The MFE and Spectogram blocks could have also served to train the AI. Depending on the range of frequency studied, either bloc could have worked better than the others.
 
+Next, we determined the number of training cycle, the learning rate and the minimum confidence rating to set as these parameters influence the accuracy of the model considerably. At the end, a confusion matrix showed the accuracy of our NN. When we were unsatisfied with the results, we uploaded additional data and retrain our model.
+
+As you can see, our NN struggled to recognize when there were bees. We were not able to retrain it due to a lack of data and time.
+
+The last step would have been to export our AI on our STM board.
+
+
 ## PCB Making
+_The Kicad project file with all sources are available to download in the Schematics tab._
+
+The first step of PCB making is to do an electrical schematic with every component.
+
+Afterwards, we followed a tutorial to conceive our board and associated our temperature sensors to grove connectors prints for a sturdier device.
+
+While designing the printed circuit board, we noticed some pins (D7, D8, and A7) would not allow us to collect our desired set of data. This is due to how the Nucleo STM32 is made, so before printing the board make sure  to test every pin.
+
+Throughout our project, we produced 2 PCBs. As mentioned earlier, at first we wanted to be able to study the hive's sound frequencies. As a result,  we designed and printed a circuit board that would allow us to collect sound samples with a microphone.
+
+Since then, we had to design a second one to reduce our energy consumption. Considering the fact that, at that point, we were resigned not to implement the AI, we decided to downsize our system as much as possible.
+
+Once the design was completed, we generated the Gerber files necessary to print our circuit board. For this project, we had access to a desktop PCB milling machine for all of our printings but you can send your files to a manufacturer.
+
 
 ## Sigfox and Ubidots
+To gather our data from a remote location, we used the Sigfox Network.
+
+To set this up, we had to activate our Wisol device here. Then, we created and signed in on a Ubidots account and added a new device.
+
+The next step is to we configure a Callback following this tutorial.
+
+Last, we created a user interface on Ubidots with a Dashboard to facilitate data examination.
 
 ## System Energy Source 
+To make our system autonomous, we chose to use a battery. The latter can be charged with solar energy thanks to the Lipo Rider Pro board which converts the energy received from the solar panel into a storable one.
+
+Then, to feed our system, we soldered wires going from the Lipo Rider Pro to our PCB. We added an ON/OFF switch to make our system easier to use.
+
+To reduce energy consumption, we decided to use a 5 - 3.3 Volt converter (LDO) instead of using the one embedded in the controller. Indeed, by doing this step, we were enable to take out the solder bridges SB9 and SB14 on the bottom layer of our micro-controller. We also removed the LEDs as circle below.
+
+Unsoldering these elements must be done last since reprogramming the board would be impossible afterwards.
 
 ## System Assembling
+First and foremost, we recommend you to use a double layered H chassis to fix the strain gauge and stabilize the hive.  Some manufacturers can construct it for you. Otherwise, you can do it yourself as pictured in the drawing below.
+
+The strain gauge (gray) is screwed to the underside of the top H chassis (dark brown) and to the upper side of the bottom one (light brown). We recommend using sturdy and water-resistant material such as aluminum.
+
+Once the system was tested and in working order,  we chose a size-adapted hermetic box. Afterwards, we placed each element meticulously in order to optimize space. We had to drill holes in the sides of the box so that our sensors could read inside the hive. Once each component was in its designated place, we screwed the lid on and hot glued around the sensors to make it waterproof.
+
+
