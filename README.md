@@ -3,7 +3,7 @@
 # B-Hive
 B-hive is an autonomous electronic monitoring device enabling beekeepers to oversee their hives' well-being.
 
-[insert photo]
+![alt text](images_article/cover.jpg)
 
 __Bees have been facing the threat of extinction for more than fifteen years. Indeed, from 30 to 40 % of bee colonies died within the last decade in Europe. This is an alarming situation for the environment since bees are the most important pollinators and therefore, an integral part of our ecosystem. Moreover, an economic issue arises. Indeed, for example in France, honey production is the additional income for more than 54,000 beekeepers and the main one for about 2,000 others.__
 
@@ -19,6 +19,8 @@ To monitor the hive's integrity we chose to study :
 * Weight (+/- 0.2 kg)
 
 We also spent a large amount of time working on an Artificial Intelligence (AI) which would have been able to indicate whether or not there was a queen bee and if there were any bees at all.  Unfortunately, we were not able to implement our neural network (NN) since exporting it proved to be more intricate than expected.
+
+![alt text](images_article/schema.png "System Diagram")
 
 
 ## Software 
@@ -52,7 +54,11 @@ The second methods did not required the B-L475E-IOT01A2 board. However, it was e
 
 To begin, we created an impulse design and set the parameters required to train our AI. Because we are dealing with bees, we needed to take a bigger window size than the one demonstrated in the tutorial. We chose to use an MFCC bloc to train our neural network, but it was not our only option. The MFE and Spectogram blocks could have also served to train the AI. Depending on the range of frequency studied, either bloc could have worked better than the others.
 
+![alt text](images_article/Empulse.png "Empulse Design")
+
 Next, we determined the number of training cycle, the learning rate and the minimum confidence rating to set as these parameters influence the accuracy of the model considerably. At the end, a confusion matrix showed the accuracy of our NN. When we were unsatisfied with the results, we uploaded additional data and retrain our model.
+
+![alt text](images_article/accuracy.png "Neural Network Accuracy")
 
 As you can see, our NN struggled to recognize when there were bees. We were not able to retrain it due to a lack of data and time.
 
@@ -64,13 +70,21 @@ _The Kicad project file with all sources are available to download in the Schema
 
 The first step of PCB making is to do an electrical schematic with every component.
 
+![alt text](images_article/schematic.png "Kicad Electrical Schematic")
+
 Afterwards, we followed a tutorial to conceive our board and associated our temperature sensors to grove connectors prints for a sturdier device.
 
 While designing the printed circuit board, we noticed some pins (D7, D8, and A7) would not allow us to collect our desired set of data. This is due to how the Nucleo STM32 is made, so before printing the board make sure  to test every pin.
 
 Throughout our project, we produced 2 PCBs. As mentioned earlier, at first we wanted to be able to study the hive's sound frequencies. As a result,  we designed and printed a circuit board that would allow us to collect sound samples with a microphone.
 
+![alt text](images_article/pc1-1.png "PCB - Version 1")
+![alt text](images_article/pcb1.png "Captioned PCB - Version 1")
+
 Since then, we had to design a second one to reduce our energy consumption. Considering the fact that, at that point, we were resigned not to implement the AI, we decided to downsize our system as much as possible.
+
+![alt text](images_article/pcb2-1.jpg "PCB - Version 2")
+![alt text](images_article/pcb2.png "Captioned PCB - Version 2")
 
 Once the design was completed, we generated the Gerber files necessary to print our circuit board. For this project, we had access to a desktop PCB milling machine for all of our printings but you can send your files to a manufacturer.
 
@@ -80,9 +94,13 @@ To gather our data from a remote location, we used the Sigfox Network.
 
 To set this up, we had to activate our Wisol device here. Then, we created and signed in on a Ubidots account and added a new device.
 
+![alt text](images_article/add.png)
+
 The next step is to we configure a Callback following this tutorial.
 
 Last, we created a user interface on Ubidots with a Dashboard to facilitate data examination.
+
+![alt text](images_article/ubi.png "User's Interface - Ubidots")
 
 ## System Energy Source 
 To make our system autonomous, we chose to use a battery. The latter can be charged with solar energy thanks to the Lipo Rider Pro board which converts the energy received from the solar panel into a storable one.
@@ -92,12 +110,18 @@ Then, to feed our system, we soldered wires going from the Lipo Rider Pro to our
 To reduce energy consumption, we decided to use a 5 - 3.3 Volt converter (LDO) instead of using the one embedded in the controller. Indeed, by doing this step, we were enable to take out the solder bridges SB9 and SB14 on the bottom layer of our micro-controller. We also removed the LEDs as circle below.
 
 Unsoldering these elements must be done last since reprogramming the board would be impossible afterwards.
+![alt text](images_article/top.jpg "Nucleo-32 board top layout")
+![alt text](images_article/nucleo32_swo_a0uEnBlsda.jpg "Nucleo-32 board bottom layout")
 
 ## System Assembling
 First and foremost, we recommend you to use a double layered H chassis to fix the strain gauge and stabilize the hive.  Some manufacturers can construct it for you. Otherwise, you can do it yourself as pictured in the drawing below.
 
+![alt text](images_article/chassis.png "Double H chassis")
+
 The strain gauge (gray) is screwed to the underside of the top H chassis (dark brown) and to the upper side of the bottom one (light brown). We recommend using sturdy and water-resistant material such as aluminum.
 
 Once the system was tested and in working order,  we chose a size-adapted hermetic box. Afterwards, we placed each element meticulously in order to optimize space. We had to drill holes in the sides of the box so that our sensors could read inside the hive. Once each component was in its designated place, we screwed the lid on and hot glued around the sensors to make it waterproof.
+
+![alt text](images_article/system.jpg "Picture of Assembled System")
 
 
