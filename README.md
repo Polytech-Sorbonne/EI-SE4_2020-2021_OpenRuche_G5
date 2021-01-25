@@ -9,6 +9,10 @@ __Bees have been facing the threat of extinction for more than fifteen years. In
 
 __Our goal is to enable beekeepers, professional or amateur, to monitor their hive remotely. Our solution is designed to save them unnecessary trips to their production site, and therefore save time. Our device is a connected sensor kit that collects data every 10 minutes and sends them to the beekeeper. This informs him on the state of his bee colonies and the quality of their environment. Our product is easy to use and affordable (about 150 €) compared to other commercialized systems.__
 
+## Our team
+
+Our team, consisting of 4 engineering graduate students, is specialized in Electronics and Computer Science - Embedded Systems (Polytech Sorbonne, Paris). Ismael COSTEL leads our team,  Lorette DAUSSY is our budget holder, Steven EA is our technical expert and Alexia TRAN is our head of communication.
+
 
 ## Data studied
 To monitor the hive's integrity we chose to study :
